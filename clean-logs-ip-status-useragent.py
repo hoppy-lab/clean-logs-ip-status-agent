@@ -49,18 +49,16 @@ def main():
         df = parse_log(lines)
         st.dataframe(df)
 
-        # Téléchargement Excel (.xlsx)
+        # Téléchargement CSV avec point-virgule
         if not df.empty:
-            excel_buffer = io.BytesIO()
-            with pd.ExcelWriter(excel_buffer, engine="openpyxl") as writer:
-                df.to_excel(writer, index=False, sheet_name="Logs")
-            excel_buffer.seek(0)
-
+            csv_buffer = io.StringIO()
+            # quoting=1 -> quote minimal, protège les champs contenant le séparateur
+            df.to_csv(csv_buffer, index=False, sep=";", quoting=1)
             st.download_button(
-                label="Télécharger le fichier Excel",
-                data=excel_buffer,
-                file_name="logs_extraits.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                label="Télécharger le fichier CSV (séparateur ;)",
+                data=csv_buffer.getvalue(),
+                file_name="logs_extraits.csv",
+                mime="text/csv"
             )
         else:
             st.warning("Aucune donnée exploitable trouvée.")
