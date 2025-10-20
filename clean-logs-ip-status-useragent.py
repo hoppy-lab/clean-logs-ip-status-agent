@@ -3,6 +3,10 @@ import pandas as pd
 import re
 import io
 
+# Configuration page
+st.set_page_config(page_title="Log cleaning file")
+st.title("Input log file, output 3 columns ip, status code, user-agent")
+
 def parse_log(lines):
     data = {"ip": [], "status_code": [], "user_agent": []}
     
