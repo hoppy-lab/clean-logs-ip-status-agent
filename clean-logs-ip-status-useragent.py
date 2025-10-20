@@ -3,10 +3,6 @@ import pandas as pd
 import re
 import io
 
-# Configuration page
-st.set_page_config(page_title="Log cleaning file")
-st.title("Input log file, output 3 columns ip, status code, user-agent")
-
 def parse_log(lines):
     data = {"ip": [], "status_code": [], "user_agent": []}
     
@@ -38,7 +34,8 @@ def parse_log(lines):
     return pd.DataFrame(data)
 
 def main():
-    st.title("Analyseur de Logs Serveur")
+    st.title("Log cleaning file")
+    st.markdown("Input log file, output 3 columns ip, status code, user-agent")
 
     uploaded_file = st.file_uploader("Choisissez un fichier de logs", type=["log", "txt", "csv"])
     
